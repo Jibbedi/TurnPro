@@ -1,5 +1,6 @@
 ---
 title: Static typing is your safety net
+date: 10.03.2018
 category: TypeScript
 tags: ['static typing','typescript', 'javascript']
 ---

@@ -1,5 +1,6 @@
 ---
 title: Single Responsibility Principle
+date: 10.03.2018
 category: Clean Code
 tags: ['clean code','ood']
 ---
