@@ -8,16 +8,16 @@ import './index.css'
 const TemplateWrapper = ({ children }) => (
   <div>
     <Helmet
-      title="Gatsby Default Starter"
+      title="TurnPro.in"
       meta={[
         {
-          name: 'description',
-          content: 'Sample',
+          name: 'TurnPro',
+          content: 'Blog',
         },
-        { name: 'keywords', content: 'sample, something' },
+        { name: 'keywords', content: 'blog,typescript,angular,clean code' },
       ]}
     />
-    <Header/>
+    <Header />
     <div
       style={{
         margin: '0 auto',

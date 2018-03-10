@@ -1,8 +1,8 @@
 {
-  "name": "gatsby-starter-default",
-  "description": "Gatsby default starter",
+  "name": "TurnPro.in",
+  "description": "My Blog",
   "version": "1.0.0",
-  "author": "Kyle Mathews <mathews.kyle@gmail.com>",
+  "author": "Johannes Kling",
   "dependencies": {
     "gatsby": "^1.9.223",
     "gatsby-link": "^1.6.38",
