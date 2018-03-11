@@ -1,12 +1,13 @@
 import React from 'react'
 import Helmet from 'react-helmet'
 import Link from 'gatsby-link'
+import Overview from '../components/Overview'
 
 export default function BlogPost({ data }) {
   const { markdownRemark: post } = data
   return (
     <div>
-      <span style={{marginRight:'10px'}}> tagged in:</span>
+      <span style={{ marginRight: '10px' }}> tagged in:</span>
       {post.frontmatter.tags.map(tag => (
         <Link style={{ marginRight: '10px' }} to={`/${tag}`}>
           {tag}
@@ -19,22 +20,48 @@ export default function BlogPost({ data }) {
           { name: 'keywords', content: post.frontmatter.tags.join(',') },
         ]}
       />
-      <div style={{display: 'flex', justifyContent:'center'}}>{post.timeToRead} minutes to read</div>
-      <div dangerouslySetInnerHTML={{ __html: post.html }} />
+      <div style={{ display: 'flex', justifyContent: 'center' }}>
+        {post.timeToRead} minutes to read
+      </div>
+      <div dangerouslySetInnerHTML={{ __html: post.html }}/>
+
+      {data.allMarkdownRemark ? (
+        <div>
+          <div>
+            related:
+          </div>
+          <div>
+            <Overview data={data}/>
+          </div>
+        </div>
+      ) : null}
+
     </div>
   )
 }
 
 export const query = graphql`
-  query BlogPostQuery($path: String!) {
+  query BlogPostQuery($path: String!,  $tags : [String!], $title : String!) {
     markdownRemark(fields: { path: { eq: $path } }) {
       html
       timeToRead
       frontmatter {
-        title
         tags
       }
-      excerpt
+    },
+    allMarkdownRemark(filter: {frontmatter: {tags : {in: $tags}, title:{ne: $title}}}) {
+      edges {
+        node {
+          fields {
+            path
+          }
+          frontmatter {
+            title
+            date
+            category
+          }
+        }
+      }  
     }
   }
 `

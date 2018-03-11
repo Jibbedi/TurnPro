@@ -54,6 +54,10 @@ exports.createPages = ({ graphql, boundActionCreators }) => {
         createPage({
           path: node.fields.path,
           component: path.resolve(`./src/templates/blog-post.js`),
+          context: {
+            tags: node.frontmatter.tags,
+            title : node.frontmatter.title
+          }
         })
       })
 
