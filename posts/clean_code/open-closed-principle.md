@@ -35,11 +35,13 @@ Let’s imagine that we’re building a chat app. We set up a _ChatWindow_ compo
 
 And implementation of that function might look like this:
 
-'' handleSubmit() {
-''     const userInput = this.getUserInput();
-''     this.sendToServer(userInput);
-''     this.clearInputField();
-''   }
+```typescript
+handleSubmit() {
+    const userInput = this.getUserInput();
+    this.sendToServer(userInput);
+    this.clearInputField();
+}
+```
 
 We get the input of the user, send it straight to the server and clear the textfield.
 The application launches and everything works fine. Soon after our company decides to increase the profit by selling an In-App-Purchase that let’s users encrypt their messages.
@@ -48,19 +50,22 @@ By looking at the reviews from our users, we see that app does not handle offlin
 We decide to check for an offline situation, and save messages to the disk in order to send them as soon as the user is connected again.
 
 That’s the code of our new version:
-''handleSubmit() {
-''     const userInput = this.getUserInput();
-''
-''     if (this.isConnected() && this.shouldUseEncryption()) {
-''       this.sendEncrypted(userInput);
-''     } else if (this.isConnected()) {
-''       this.sendToServer(userInput);
-''     } else {
-''       this.saveOffline(userInput);
-''     }
-''
-''     this.clearInputField();
-''   }
+
+```typescript
+handleSubmit() {
+    const userInput = this.getUserInput();
+
+    if (this.isConnected() && this.shouldUseEncryption()) {
+         this.sendEncrypted(userInput);
+    } else if (this.isConnected()) {
+         this.sendToServer(userInput);
+    } else {
+         this.saveOffline(userInput);
+    }
+
+    this.clearInputField();
+}
+```
 
 We had to open up our _ChatWindow_ class in order to add the requested behaviour. Therefore we are violating the Open-Closed Principle. Our module is not _closed for modification_.
 
@@ -97,42 +102,44 @@ The factory is now in charge of finding out whether the user is offline or needs
 
 The _ChatWindow_ will be given the correct implementation when it’s created. This is called _Dependency Injection_.
 
-''interface InputHandler {
-''   handleInput(userInput: string);
-'' }
-''
-'' class ChatWindow {
-''
-''   private _inputHandler: InputHandler;
-''
-''   constructor(inputHandler: InputHandler) {
-''     this._inputHandler = inputHandler;
-''   }
-''
-''   handleSubmit() {
-''     const userInput = this.getUserInput();
-''     this._inputHandler.handleInput(userInput);
-''     this.clearInputField();
-''   }
-'' }
-''
-'' class OfflineHandler implements InputHandler {
-''   handleInput(userInput: string) {
-''     //save offline
-''   }
-'' }
-''
-'' class DefaultHandler implements InputHandler {
-''   handleInput(userInput: string) {
-''     //send to server
-''   }
-'' }
-''
-'' class EncryptionHandler implements InputHandler {
-''   handleInput(userInput: string) {
-''     //encrypt and then send to server
-''   }
-'' }
+```typescript
+interface InputHandler {
+    handleInput(userInput: string);
+}
+
+class ChatWindow {
+
+    private _inputHandler: InputHandler;
+
+    constructor(inputHandler: InputHandler) {
+        this._inputHandler = inputHandler;
+    }
+
+    handleSubmit() {
+        const userInput = this.getUserInput();
+        this._inputHandler.handleInput(userInput);
+        this.clearInputField();
+    }
+}
+
+class OfflineHandler implements InputHandler {
+    handleInput(userInput: string) {
+     //save offline
+    }
+}
+
+class DefaultHandler implements InputHandler {
+    handleInput(userInput: string) {
+     //send to server
+  }
+}
+
+class EncryptionHandler implements InputHandler {
+   handleInput(userInput: string) {
+     //encrypt and then send to server
+   }
+}
+```
 
 
 If we take a look at the _handleSubmit_ method in _ChatWindow_ we notice that those if/else statements are gone. How gorgeous is that?
@@ -151,34 +158,36 @@ The idea here is to create a template implementation which provides hooks (call 
 
 The code for getting the user input and clearing the text field is now in a template method in the abstract class _AbstractChatWindow_. It has an abstract method (the hook) called _handleUserInput_ that needs to be overridden by the derived classes, in order to change the implementation. We create a subclass for Offline handling, encryption and no encryption handling.
 
-''abstract class AbstractChatWindow {
-''
-''   abstract handleUserInput(userInput: string);
-''
-''   handleSubmit() {
-''     const userInput = this.getUserInput();
-''     this.handleUserInput(userInput);
-''     this.clearInputField();
-''   }
-'' }
-''
-'' class OfflineChatWindow extends AbstractChatWindow {
-''   handleUserInput(userInput: string) {
-''     //save offline
-''   }
-'' }
-''
-'' class DefaultHandler extends AbstractChatWindow {''
-''   handleUserInput(userInput: string) {
-''     //send to server
-''   }
-'' }
-''
-'' class EncryptionChatWindow extends AbstractChatWindow {
-''   handleUserInput(userInput: string) {
-''     //encrypt and then send to server
-''   }
-'' }
+```typescript
+abstract class AbstractChatWindow {
+
+    abstract handleUserInput(userInput: string);
+
+    handleSubmit() {
+        const userInput = this.getUserInput();
+       this.handleUserInput(userInput);
+        this.clearInputField();
+    }
+}
+
+class OfflineChatWindow extends AbstractChatWindow {
+    handleUserInput(userInput: string) {
+     //save offline
+   }
+}
+
+class DefaultHandler extends AbstractChatWindow {
+    handleUserInput(userInput: string) {
+     //send to server
+   }
+}
+
+class EncryptionChatWindow extends AbstractChatWindow {
+    handleUserInput(userInput: string) {
+     //encrypt and then send to server
+    }
+}
+```
 
 Again, our code conforms to the Open-Closed Principle. In order to add a new feature, we can simply add a new subclass. The template method code remains unchanged.
 
