@@ -40,12 +40,33 @@ exports.createPages = ({ graphql, boundActionCreators }) => {
         }
       }
     `).then(result => {
+
+      const tags = []
+
       result.data.allMarkdownRemark.edges.forEach(({ node }) => {
+
+        node.frontmatter.tags.forEach(tag => {
+          if (!tags.includes(tag)) {
+            tags.push(tag)
+          }
+        })
+
         createPage({
           path: node.fields.path,
           component: path.resolve(`./src/templates/blog-post.js`),
         })
       })
+
+      tags.forEach(tag => {
+        createPage({
+          path: tag,
+          component: path.resolve(`./src/templates/tag-overview.js`),
+          context: {
+            tag
+          }
+        })
+      })
+
       resolve()
     })
   })
