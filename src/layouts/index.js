@@ -5,6 +5,8 @@ import Helmet from 'react-helmet'
 import Header from '../components/Header'
 import './index.css'
 
+require("prismjs/themes/prism-okaidia.css");
+
 const TemplateWrapper = ({ children }) => (
   <div>
     <Helmet

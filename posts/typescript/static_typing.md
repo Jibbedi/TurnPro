@@ -13,7 +13,25 @@ Static typing is great. Declaring what type a variable should be and what goes i
 
 Check out the code below. You can easily tell that _getLogger()_ will return an instance of type _Logger_. And since the type is clear - you and your IDE know that the only method you can call on it is _log(test : string)_ which itself takes an argument of type string.
 
-[ https://gist.github.com/f0b3f5922746135335e8b35e500525ef ]
+```typescript
+//Logger.ts
+export class Logger {
+    log(msg : string) : void {
+        console.log(msg);
+    }
+}
+
+export function getLogger() : Logger {
+    return new Logger();
+}
+
+
+//main.ts
+import {getLogger} from "./Logger";
+
+let logger : Logger = getLogger();
+logger.log("hello world");
+```
 
 ##Runtime Safety
 Have you ever seen an error in your console that said something like __Uncaught TypeError: foo.bar is not a function(…)__?
@@ -38,8 +56,26 @@ When your codebase reach a certain size or you work with multiple people on it, 
 What we’ve learned so far is that by using static typing your code is not only easier to understand and refactor but it also prevents us from mistakes that occur on runtime. Everything’s great, right?
 
 Well….look at those lines again:
-[https://gist.github.com/60fe3d24bab6ae1b5281e03632949188]
 
+```typescript
+//Logger.ts
+export class Logger {
+    log(msg : string) : void {
+        console.log(msg);
+    }
+}
+
+export function getLogger() : Logger {
+    return new Logger();
+}
+
+
+//main.ts
+import {getLogger} from "./Logger";
+
+let logger : Logger = getLogger();
+logger.log("hello world");
+```
 From what I’ve told you thus far this should always work without any problems. The truth is something like that might happen:
 __ Uncaught TypeError: Cannot read property 'log' of null__
 
@@ -60,7 +96,11 @@ That’s were the optional part comes into play.
 
 Notice the return type in the code below. It returns a _Logger_ or _null_.
 
-[https://gist.github.com/1b38a069f53b95a4e1adbfb8f03b64d9]
+```typescript
+export function getLogger() : Logger|null {
+    return new Logger(); //could also be null
+}
+```
 
 So..back where we started? Not quite. Try to call the log method of the value you received. What’s the result?
 
@@ -73,7 +113,17 @@ Sounds scary right? Don’t worry, what this basically means is that the compile
 
 How do we check if a value is safe to call? We wrap it in an if-statement.
 
-[https://gist.github.com/8c75706f7d250cef1a85e476af704d30]
+```typescript
+import {getLogger} from "./Logger";
+
+let logger = getLogger(); //might be null
+if (logger) {
+    //typescript is now smart enough to understand
+    //we just check for a value and therefore let's us call log
+
+    logger.log("hello world");
+}
+```
 
 Notice how the compiler forces us to write defensive code and therefore making it impossible to run into one of the most common runtime exceptions.
 

@@ -9,6 +9,27 @@ module.exports = {
         path: `${__dirname}/posts`
       },
     },
-    'gatsby-transformer-remark'
+    `gatsby-plugin-sharp`,
+    {
+      resolve: `gatsby-transformer-remark`,
+      options: {
+        plugins: [
+          {
+            resolve: `gatsby-remark-images`,
+            options: {
+              options: {
+                maxWidth: 960,
+              },
+            },
+          },
+          {
+            resolve: `gatsby-remark-prismjs`,
+            options: {
+              classPrefix: "language-",
+            },
+          },
+        ],
+      },
+    },
   ],
 }
