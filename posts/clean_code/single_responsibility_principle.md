@@ -9,6 +9,7 @@ tags: ['clean code','ood']
 
 (img)
 
+
 Writing software is easy. What's hard is to write software that's easy to understand and easy to change six months down the road by another human being.
 
 One way to help you achieve this is to follow the Single Responsibility Principle, that was introduced by Robert „Uncle Bob“ Martin in his book Agile Software Development - Principles, Patterns and Practices in 2002.

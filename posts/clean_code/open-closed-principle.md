@@ -90,7 +90,7 @@ So, what can we do in order to conform to the Open Closed Principle? Generally, 
 ### Strategy Pattern
 The [Strategy Pattern] suggests that you create an interface, in order to selected the right “strategy”, i.e. the right implementation at runtime. Let’s the how we could implement it:
 
-(img)
+![Strategy Pattern Example](/static/images/strategy_pattern.png)
 
 We define an interface with one method _handleInput_ on it. Now, we pull out all implementation details for offline handling, encryption and no encryption from _ChatWindow_ into their own files and let them implement the _InputHandlerInterface_. The _ChatWindow_ itself is now only responsible for getting the user input and clearing the text field. It hands the data to one of the implementations and has done it’s job.
 
@@ -154,7 +154,7 @@ Obviously, something has to change in order to get that new feature working, tho
 [This] approach also uses abstraction in order to conform to the OCP.
 The idea here is to create a template implementation which provides hooks (call abstract methods) that can be overridden by subclasses in order to change the behaviour.
 
-(img)
+![Template Method Pattern Example](/static/images/template_method_pattern.png)
 
 The code for getting the user input and clearing the text field is now in a template method in the abstract class _AbstractChatWindow_. It has an abstract method (the hook) called _handleUserInput_ that needs to be overridden by the derived classes, in order to change the implementation. We create a subclass for Offline handling, encryption and no encryption handling.
 
