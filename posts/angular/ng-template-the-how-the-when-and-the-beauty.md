@@ -39,7 +39,7 @@ The easiest way to render a template (we’ll discover some more along the way) 
 
 See what we’ve done here? We’ve assigned our template to a reference called #myTemplate. Now we create an outlet at the location, where we want our content to be rendered to the screen and pass it our template.
 
-> “Hey Angular, I’ve go this blueprint called myTemplate here. Can you take it and display it over there?” (Our code in plain english)
+> “Hey Angular, I’ve got this blueprint called myTemplate here. Can you take it and display it over there?” - Our code in plain english
 
 If you now check your browser you should see a nice welcoming.
 
