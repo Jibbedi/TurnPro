@@ -2,7 +2,7 @@
 title:  ng-template - the how, the when and the beauty
 date: 03.08.2018
 category: Angular
-tags: [‘angular’, ‘templates’]
+tags: ['angular', 'templates']
 ---
 
 # ng-template - the how, the when and the beauty
@@ -15,9 +15,11 @@ We’ll start off from the very basic of what a template is, discover how you al
 
 Sounds good? Okay let’s spin up our editor and write some templates!
 
-    <ng-template>
-      Hello world!
-    </ng-template>
+```html
+<ng-template>
+    Hello world!
+</ng-template>
+```
 
 So how does it look in the browser? Blank screen, you say? Hm, can you check the error log for me? Just kidding.
 This is the expected behaviour.
@@ -27,11 +29,13 @@ So how do we actually use classes? Well, we create instances of it. Same goes fo
 
 The easiest way to render a template (we’ll discover some more along the way) is to create a _TemplateOutlet_ - which is basically just a location for the content defined in our blueprint to be displayed in.
 
-    <ng-template #myTemplate>
-      Hello world!
-    </ng-template>
+```html
+<ng-template #myTemplate>
+    Hello world!
+</ng-template>
 
-    <ng-container [ngTemplateOutlet]="myTemplate"></ng-container>
+<ng-container [ngTemplateOutlet]="myTemplate"></ng-container>
+```
 
 See what we’ve done here? We’ve assigned our template to a reference called #myTemplate. Now we create an outlet at the location, where we want our content to be rendered to the screen and pass it our template.
 
@@ -41,7 +45,9 @@ If you now check your browser you should see a nice welcoming.
 
 Couldn’t we get the same result by just typing _Hello world_ into our editor?
 
-    Hello world
+```html
+Hello world
+```
 
 …Yes.
 
