@@ -9,7 +9,7 @@ tags: ['angular', 'templates']
 
 I’ll start this one off with a quick challenge. Think of your five favourite features of Angular.
 
-Are ng-templates on that list? It certainly wasn’t on mine a couple of months ago, but now it easily ranks in the top three and if wasn’t on your list either, you’re in for a real treat with this series of blog posts, which will make you a template pro in no time.
+Are ng-templates on that list? It certainly wasn’t on mine a couple of months ago, but now it easily ranks in the top three and if it wasn’t on your list either, you’re in for a real treat with this series of blog posts, which will make you a template pro in no time.
 
 We’ll start off from the very basic of what a template is, discover how you already heavily use templates in your application and finally go pro by creating flexible UI components with fully customisable appearances (no css magic involved).
 
